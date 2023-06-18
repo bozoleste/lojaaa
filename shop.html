@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loja</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <h1>Loja</h1>
+    <!-- Itens da loja -->
+    <button id="cart-button">Ver Carrinho</button>
+    <button id="total-button">Ver Total</button>
+
+    <!-- Menu do dono -->
+    <div id="owner-menu" class="hidden">
+        <h2>Menu do Dono</h2>
+        <button id="stock-button">Ver Estoque</button>
+        <button id="sales-button">Ver Vendas</button>
+        <button id="restockButton" onclick="restockItem()">Repor Estoque</button>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        function restockItem() {
+            var itemName = document.getElementById("itemNameInput").value;
+            var quantity = document.getElementById("quantityInput").value;
+
+            if (itemName && quantity) {
+                var restockData = {
+                    itemName: itemName,
+                    quantity: parseInt(quantity)
+                };
+
+                // Enviar dados para o servidor
+                $.post("restockItem", JSON.stringify(restockData), function (response) {
+                    if (response === "ok") {
+                        // Operação concluída com sucesso
+                        // Atualize a interface, se necessário
+                    } else {
+                        // Lidar com erro, se aplicável
+                    }
+                });
+            } else {
+                // Lidar com entrada inválida, se necessário
+            }
+        }
+
+        document.getElementById('sacarButton').addEventListener('click', function() {
+            var amount = parseFloat(document.getElementById('sacarInput').value);
+            if (!isNaN(amount) && amount > 0) {
+                // Envia um evento para o servidor solicitar o saque
+                // O valor do saque será passado como parâmetro
+                emit('vrp_example:withdrawCash', amount);
+            }
+        });
+    </script>
+</body>
+</html>
